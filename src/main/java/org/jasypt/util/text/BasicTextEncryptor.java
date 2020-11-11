@@ -23,7 +23,15 @@ public final class BasicTextEncryptor implements TextEncryptor {
 
     @Override
     public String encrypt(final String message) {
-        int shift = password.length();
+        return cipher(message, password.length());
+    }
+
+    @Override
+    public String decrypt(final String encryptedMessage) {
+        return cipher(encryptedMessage, 26 - password.length());
+    }
+
+    private String cipher(String message, int shift) {
         StringBuffer result= new StringBuffer();
         for (int i = 0; i < message.length(); i++) {
             if (Character.isUpperCase(message.charAt(i))) {
@@ -31,22 +39,6 @@ public final class BasicTextEncryptor implements TextEncryptor {
                 result.append((char)ch);
             } else {
                 int ch = ((int)message.charAt(i) + shift - 97) % 26 + 97;
-                result.append((char)ch);
-            }
-        }
-        return result.toString();
-    }
-
-    @Override
-    public String decrypt(final String encryptedMessage) {
-        int shift = password.length();
-        StringBuffer result= new StringBuffer();
-        for (int i = 0; i < encryptedMessage.length(); i++) {
-            if (Character.isUpperCase(encryptedMessage.charAt(i))) {
-                int ch = ((int)encryptedMessage.charAt(i) + (26 - shift) - 65) % 26 + 65;
-                result.append((char)ch);
-            } else {
-                int ch = ((int)encryptedMessage.charAt(i) + (26 - shift) - 97) % 26 + 97;
                 result.append((char)ch);
             }
         }
