@@ -13,7 +13,7 @@ public class JasyptTest {
     @BeforeEach
     public void setUp() {
         textEncryptor = new BasicTextEncryptor();
-        textEncryptor.setPasswordCharArray("cuti".toCharArray());
+        textEncryptor.setPasswordCharArray("123".toCharArray());
     }
 
     @Test
@@ -24,17 +24,14 @@ public class JasyptTest {
 
     @Test
     public void hackJasyptBasicEncryptor_encrypt() {
-        String expectedEncryptedText = "cuti-h/cuti-e/cuti-l/cuti-l/cuti-o";
-
-        String actualEncryptedText = textEncryptor.encrypt("hello");
-        assertEquals(expectedEncryptedText, actualEncryptedText);
+        String actual = textEncryptor.encrypt("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+        assertEquals("DEFGHIJKLMNOPQRSTUVWXYZABC", actual);
     }
 
     @Test
     public void hackJasyptBasicEncryptor_decrypt() {
-        String expectedPlainText = "hello";
-
-        String actualPlainText = textEncryptor.decrypt("cuti-h/cuti-e/cuti-l/cuti-l/cuti-o");
-        assertEquals(expectedPlainText, actualPlainText);
+        String actual = textEncryptor.decrypt("DEFGHIJKLMNOPQRSTUVWXYZABC");
+        assertEquals("ABCDEFGHIJKLMNOPQRSTUVWXYZ", actual);
     }
+
 }
